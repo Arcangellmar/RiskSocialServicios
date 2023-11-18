@@ -39,8 +39,10 @@ namespace RiskSocialCrearUsuario.DAO
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                if (ex.Message.Contains("Duplicate entry")) throw new Exception("El correo ya esta registrado");
+
                 return false;
             }
         }

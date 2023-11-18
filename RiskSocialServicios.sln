@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiskSocialProyectoSeguimien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiskSocialComentarioEliminar", "RiskSocialComentarioEliminar\RiskSocialComentarioEliminar.csproj", "{D3206EBB-1DAC-4849-A430-722AF1411FA4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiskSocialLogin", "RiskSocialLogin\RiskSocialLogin.csproj", "{72026DD0-E28E-4EFD-86E1-ED326A711CCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{D3206EBB-1DAC-4849-A430-722AF1411FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3206EBB-1DAC-4849-A430-722AF1411FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3206EBB-1DAC-4849-A430-722AF1411FA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72026DD0-E28E-4EFD-86E1-ED326A711CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72026DD0-E28E-4EFD-86E1-ED326A711CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72026DD0-E28E-4EFD-86E1-ED326A711CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72026DD0-E28E-4EFD-86E1-ED326A711CCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
