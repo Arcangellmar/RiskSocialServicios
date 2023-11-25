@@ -1,4 +1,5 @@
 using Amazon.Lambda.Core;
+using Amazon.S3.Model;
 using RiskSocialProyectoCrear.DAO;
 using RiskSocialProyectoCrear.Domain;
 using RiskSocialProyectoCrear.Interfaces;
@@ -42,6 +43,38 @@ public class Function
 
                 if (Data)
                 {
+
+                    if (input.ArchivosS3 != null)
+                    {
+                        foreach(var archivo in input.ArchivosS3)
+                        {
+                            try
+                            {
+                                if (archivo.FileB64 == null)
+                                {
+                                    continue;
+                                }
+
+                                string key = $"Acciones/{IdProyecto}/{archivo.NombreArchivo}";
+
+                                byte[] dataB64 = Convert.FromBase64String(archivo.FileB64);
+
+                                PutObjectRequest uploadRequest = new()
+                                {
+                                    BucketName = "risk-social",
+                                    Key = key,
+                                    InputStream = new MemoryStream(dataB64),
+                                    ContentType = archivo.ContentType
+                                };
+
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+                        }
+                    }
+
                     responseFunction.Success = true;
                     responseFunction.Message = "Proyecto creado correctamente";
                 }

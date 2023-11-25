@@ -31,7 +31,7 @@ namespace RiskSocialProblemaCrear.DAO
                     cmd.Parameters.Add("@PARAM_VC_PRIODIDAD", MySqlDbType.VarChar).Value = request.Prioricidad;
                     cmd.Parameters.Add("@PARAM_VC_CRITICIDAD", MySqlDbType.VarChar).Value = request.Criticidad;
                     cmd.Parameters.Add("@PARAM_IN_ID_USUARIO_ASIGNADO", MySqlDbType.Int32).Value = request.UsuarioAsignado;
-                    cmd.Parameters.Add("@PARAM_IN_ID_PROYECTO", MySqlDbType.Int32).Value = request.IdProyecto;
+                    cmd.Parameters.Add("@PARAM_IN_ID_RIESGO", MySqlDbType.Int32).Value = request.IdRiesgo;
 
                     string? ReturnBD = cmd.ExecuteScalar().ToString();
                     cn.Close();

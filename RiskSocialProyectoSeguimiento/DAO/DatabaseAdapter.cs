@@ -82,22 +82,22 @@ namespace RiskSocialProyectoSeguimiento.DAO
                                 response.Reportes.Add(data);
                             }
                         }
-                        if (cursor.NextResult())
-                        {
-                            while (cursor.Read())
-                            {
-                                Problemas data = new()
-                                {
-                                    NombreProblema = (cursor["VC_NOMBRE_PROBLEMA"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_NOMBRE_PROBLEMA"]),
-                                    Prioridad = (cursor["VC_PRIORIDAD"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_PRIORIDAD"]),
-                                    Criticidad = (cursor["VC_CRITICIDAD"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_CRITICIDAD"]),
-                                    Estado = (cursor["VC_ESTADO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_ESTADO"]),
-                                    Usuario = (cursor["VC_USUARIO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_USUARIO"]),
-                                };
+                        //if (cursor.NextResult())
+                        //{
+                        //    while (cursor.Read())
+                        //    {
+                        //        Problemas data = new()
+                        //        {
+                        //            NombreProblema = (cursor["VC_NOMBRE_PROBLEMA"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_NOMBRE_PROBLEMA"]),
+                        //            Prioridad = (cursor["VC_PRIORIDAD"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_PRIORIDAD"]),
+                        //            Criticidad = (cursor["VC_CRITICIDAD"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_CRITICIDAD"]),
+                        //            Estado = (cursor["VC_ESTADO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_ESTADO"]),
+                        //            Usuario = (cursor["VC_USUARIO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_USUARIO"]),
+                        //        };
 
-                                response.Problemas.Add(data);
-                            }
-                        }
+                        //        response.Problemas.Add(data);
+                        //    }
+                        //}
                         if (cursor.NextResult())
                         {
                             while (cursor.Read())

@@ -45,6 +45,7 @@ public class Function
             }
             else
             {
+                responseFunction = new();
                 responseFunction.Mensaje = "Sucedio un error al loguearse";
                 responseFunction.Estado = false;
             }
@@ -52,6 +53,7 @@ public class Function
         }
         catch (Exception ex)
         {
+            responseFunction = new();
             responseFunction.Mensaje = ex.Message;
             responseFunction.Estado = false;
         }

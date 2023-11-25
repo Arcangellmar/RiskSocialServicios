@@ -6,5 +6,6 @@
         public string? DescripcionAccion { get; set; }
         public int? IdUsuarioCreador { get; set; }
         public int? IdProyecto { get; set; }
+        public string? Estado { get; set; }
     }
 }

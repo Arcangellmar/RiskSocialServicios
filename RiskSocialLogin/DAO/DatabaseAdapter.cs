@@ -21,8 +21,6 @@ namespace RiskSocialLogin.DAO
             {
                 Response? response = null;
 
-                request.Pass = Encry.HashPassword(request.Pass);
-
                 using (MySqlConnection cn = new(connectionString))
                 {
                     MySqlCommand cmd = new();
@@ -32,7 +30,6 @@ namespace RiskSocialLogin.DAO
                     cmd.CommandText = @"sp_usuario_login";
 
                     cmd.Parameters.Add("@PARAM_VC_CORREO", MySqlDbType.VarChar).Value = request.Correo;
-                    cmd.Parameters.Add("@PARAM_VC_PASS", MySqlDbType.VarChar).Value = request.Pass;
 
                     using (var cursor = cmd.ExecuteReader())
                     {
@@ -43,9 +40,15 @@ namespace RiskSocialLogin.DAO
                                 IdUsuario = (cursor["IN_ID_USUARIO"] == DBNull.Value) ? null : Convert.ToInt32(cursor["IN_ID_USUARIO"]),
                                 Usuario = (cursor["VC_USUARIO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_USUARIO"]),
                                 Nombre = (cursor["VC_NOMBRE"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_NOMBRE"]),
-                                Correo = (cursor["VC_CORREO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_CORREO"])
+                                Pass = (cursor["VC_PASS"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_PASS"]),
+                                Correo = (cursor["VC_CORREO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_CORREO"]),
                             };
                         }
+                    }
+
+                    if (Encry.Decry(response.Pass) != request.Pass)
+                    {
+                        throw new Exception("Contraseñas no iguales");
                     }
 
                     return response;

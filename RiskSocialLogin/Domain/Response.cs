@@ -8,5 +8,6 @@
         public string? Correo { get; set; }
         public string? Mensaje { get; set; }
         public bool? Estado { get; set; }
+        public string? Pass { get; set; }
     }
 }

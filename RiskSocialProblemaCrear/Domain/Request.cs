@@ -7,6 +7,6 @@
         public string? Prioricidad { get; set; }
         public string? Criticidad { get; set; }
         public int? UsuarioAsignado { get; set; }
-        public int? IdProyecto { get; set; }
+        public int? IdRiesgo { get; set; }
     }
 }
