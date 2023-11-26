@@ -13,17 +13,13 @@ namespace RiskSocialCrearUsuario.Utils
             //{
             //    byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
             //    byte[] hashBytes = sha256.ComputeHash(passwordBytes);
-
             //    // Convierte el hash a una representación de cadena hexadecimal
             //    string hash = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-
             //    return hash;
             //}
 
             // Reemplaza 'your-key-id' con el ID de tu clave maestra de KMS
             var keyId = "fc7880c2-18b4-45e4-860d-daeb0a191870";
-
-            // Reemplaza 'your-region' con la región de tu clave
 
             // Crea el cliente de KMS
             using (var kmsClient = new AmazonKeyManagementServiceClient())
