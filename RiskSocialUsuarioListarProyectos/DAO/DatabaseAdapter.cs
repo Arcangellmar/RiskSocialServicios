@@ -43,6 +43,7 @@ namespace RiskSocialUsuarioListarProyectos.DAO
                                 FechaInicio = (cursor["DT_FECHA_INICIO"] == DBNull.Value) ? null : Convert.ToString(cursor["DT_FECHA_INICIO"]),
                                 FechaFin = (cursor["DT_FECHA_FIN"] == DBNull.Value) ? null : Convert.ToString(cursor["DT_FECHA_FIN"]),
                                 Estado = (cursor["VC_ESTADO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_ESTADO"]),
+                                NombreRol = (cursor["VC_NOMBRE_ROL"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_NOMBRE_ROL"]),
                             };
 
                             response.Proyectos.Add(data);

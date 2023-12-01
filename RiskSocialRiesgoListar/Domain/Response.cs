@@ -6,6 +6,7 @@
     }
     public class Riesgo
     {
+        public int? IdRiesgo { get; set; }
         public string? NombreRiesgo { get; set; }
         public double? Probabilidad { get; set; }
         public double? Impacto { get; set; }

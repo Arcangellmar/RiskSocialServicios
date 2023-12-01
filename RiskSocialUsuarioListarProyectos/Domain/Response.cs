@@ -12,5 +12,6 @@
         public string? FechaInicio { get; set; }
         public string? FechaFin { get; set; }
         public string? Estado { get; set; }
+        public string? NombreRol { get; set; }
     }
 }

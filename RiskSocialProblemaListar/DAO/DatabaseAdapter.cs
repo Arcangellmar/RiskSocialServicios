@@ -1,9 +1,9 @@
 ﻿using MySql.Data.MySqlClient;
-using RiskSocialRiesgoListar.Domain;
-using RiskSocialRiesgoListar.Interfaces;
+using RiskSocialProblemaListar.Domain;
+using RiskSocialProblemaListar.Interfaces;
 using System.Data;
 
-namespace RiskSocialRiesgoListar.DAO
+namespace RiskSocialProblemaListar.DAO
 {
     public class DatabaseAdapter : IDatabasePort
     {
@@ -14,10 +14,10 @@ namespace RiskSocialRiesgoListar.DAO
             this.connectionString = connectionString;
         }
 
-        public Response RiesgoListar(Request request)
+        public Response ProblemaListar(Request request)
         {
             Response response = new();
-            response.Riesgos = new List<Riesgo>();
+            response.Problemas = new List<Problema>();
 
             try
             {
@@ -27,7 +27,7 @@ namespace RiskSocialRiesgoListar.DAO
                     cn.Open();
                     cmd.Connection = cn;
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = @"sp_riesgos_listar";
+                    cmd.CommandText = @"sp_problemas_listar";
 
                     cmd.Parameters.Add("@PARAM_IN_ID_PROYECTO", MySqlDbType.Int32).Value = request.IdProyecto;
 
@@ -35,26 +35,25 @@ namespace RiskSocialRiesgoListar.DAO
                     {
                         while (cursor.Read())
                         {
-                            Riesgo data = new()
+                            Problema data = new()
                             {
-                                IdRiesgo = (cursor["IN_ID_RIESGO"] == DBNull.Value) ? null : Convert.ToInt32(cursor["IN_ID_RIESGO"]),
-                                NombreRiesgo = (cursor["VC_NOMBRE_RIESGO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_NOMBRE_RIESGO"]),
-                                Probabilidad = (cursor["DO_PROBABILIDAD"] == DBNull.Value) ? null : Convert.ToDouble(cursor["DO_PROBABILIDAD"]),
-                                Impacto = (cursor["DO_IMPACTO"] == DBNull.Value) ? null : Convert.ToDouble(cursor["DO_IMPACTO"]),
-                                Prioridad = (cursor["VC_PRIODIDAD"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_PRIODIDAD"]),
+                                NombreProblema = (cursor["VC_NOMBRE_PROBLEMA"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_NOMBRE_PROBLEMA"]),
+                                Descripcion = (cursor["VC_DESCRIPCION_PROBLEMA"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_DESCRIPCION_PROBLEMA"]),
+                                Pioridad = (cursor["VC_PRIORIDAD"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_PRIORIDAD"]),
                                 Criticidad = (cursor["VC_CRITICIDAD"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_CRITICIDAD"]),
                                 Estado = (cursor["VC_ESTADO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_ESTADO"]),
-                                Usuario = (cursor["VC_USUARIO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_USUARIO"]),
+                                NombreUsuarioAsignado = (cursor["VC_NOMBRE"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_NOMBRE"]),
+                                NombreRiesgo = (cursor["VC_NOMBRE_RIESGO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_NOMBRE_RIESGO"]),
                             };
 
-                            response.Riesgos.Add(data);
+                            response.Problemas.Add(data);
                         }
                     }
                     cn.Close();
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
             }
 

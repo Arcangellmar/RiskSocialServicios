@@ -29,7 +29,7 @@ namespace RiskSocialUsuariosListar.DAO
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandText = @"sp_usuario_listar";
 
-                    //cmd.Parameters.Add("@PARAM_IN_ID_USUARIO", MySqlDbType.Int32).Value = request.IdUsuario;
+                    cmd.Parameters.Add("@PARAM_IN_ID_PROYECTO", MySqlDbType.Int32).Value = request.IdProyecto;
 
                     using (var cursor = cmd.ExecuteReader())
                     {
