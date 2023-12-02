@@ -1,4 +1,4 @@
-﻿namespace RiskSocialAsignarRol.Domain
+﻿namespace RiskSocialAsignarRolCQRS.Domain
 {
     public class ConfigApp
     {

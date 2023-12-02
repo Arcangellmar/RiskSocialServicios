@@ -1,13 +1,14 @@
 using Amazon.Lambda.Core;
-using RiskSocialAsignarRol.DAO;
-using RiskSocialAsignarRol.Domain;
-using RiskSocialAsignarRol.Interfaces;
-using RiskSocialAsignarRol.Services;
+using RiskSocialAccionesListar.Domain;
+using RiskSocialAccionesListar.Interfaces;
+using RiskSocialAccionesListar.DAO;
+using RiskSocialAccionesListar.Services;
+using Newtonsoft.Json;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace RiskSocialAsignarRol;
+namespace RiskSocialAccionesListar;
 
 public class Function
 {
@@ -17,6 +18,7 @@ public class Function
 
     public Response FunctionHandler(Request input, ILambdaContext context)
     {
+        LambdaLogger.Log(JsonConvert.SerializeObject(input));
         Response responseFunction = new();
 
         try
@@ -31,29 +33,17 @@ public class Function
                 throw new Exception("Error al obtener archivo de configuracion");
             }
 
-            //string connectionString = config.ConnectionString;
-            string connectionString = config.connectionStringEscritura;
+            string connectionString = config.ConnectionString;
 
             databasePort = new DatabaseAdapter(connectionString);
 
-            var IdRiesgo = databasePort.RolCambiar(input);
+            var res = databasePort.AccionesListar(input);
 
-            if (IdRiesgo)
-            {
-                responseFunction.Success = true;
-                responseFunction.Message = "Rol actualizado correctamente";
-            }
-            else
-            {
-                responseFunction.Success = false;
-                responseFunction.Message = "Sucedio un error al actualizar el rol";
-            }
+            return res;
 
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            responseFunction.Success = false;
-            responseFunction.Message = e.Message;
         }
 
         return responseFunction;

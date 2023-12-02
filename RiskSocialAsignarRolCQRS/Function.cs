@@ -1,13 +1,13 @@
 using Amazon.Lambda.Core;
-using RiskSocialAsignarRol.DAO;
-using RiskSocialAsignarRol.Domain;
-using RiskSocialAsignarRol.Interfaces;
-using RiskSocialAsignarRol.Services;
+using RiskSocialAsignarRolCQRS.DAO;
+using RiskSocialAsignarRolCQRS.Domain;
+using RiskSocialAsignarRolCQRS.Interfaces;
+using RiskSocialAsignarRolCQRS.Services;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace RiskSocialAsignarRol;
+namespace RiskSocialAsignarRolCQRS;
 
 public class Function
 {
@@ -31,22 +31,31 @@ public class Function
                 throw new Exception("Error al obtener archivo de configuracion");
             }
 
-            //string connectionString = config.ConnectionString;
-            string connectionString = config.connectionStringEscritura;
+            string connectionString = config.ConnectionString;
 
-            databasePort = new DatabaseAdapter(connectionString);
+            databasePort = new DatabaseAdapter(config.connectionStringEscritura);
 
-            var IdRiesgo = databasePort.RolCambiar(input);
+            var data = databasePort.ListarDatos();
 
-            if (IdRiesgo)
+            if (data != null)
             {
-                responseFunction.Success = true;
-                responseFunction.Message = "Rol actualizado correctamente";
+                var success = databasePort.InsertarDatos(data, connectionString);
+
+                if (success ?? false)
+                {
+                    responseFunction.Success = true;
+                    responseFunction.Message = "Roles migrados correctamente";
+                }
+                else
+                {
+                    responseFunction.Success = false;
+                    responseFunction.Message = "No se pudo cargar la informacion correctamente";
+                }
             }
             else
             {
                 responseFunction.Success = false;
-                responseFunction.Message = "Sucedio un error al actualizar el rol";
+                responseFunction.Message = "No se pudo obtener la informacion";
             }
 
         }

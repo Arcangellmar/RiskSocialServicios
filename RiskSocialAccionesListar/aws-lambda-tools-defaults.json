@@ -13,15 +13,14 @@
     "function-runtime"      : "dotnet6",
     "function-memory-size"  : 256,
     "function-timeout"      : 30,
-    "function-handler"      : "RiskSocialMatriz::RiskSocialMatriz.Function::FunctionHandler",
+    "function-handler"      : "RiskSocialAccionesListar::RiskSocialAccionesListar.Function::FunctionHandler",
     "framework"             : "net6.0",
-    "function-name"         : "RiskSocial-Matriz",
+    "function-name"         : "RiskSocial-AccionListar",
     "package-type"          : "Zip",
     "function-role"         : "arn:aws:iam::244357815448:role/lambda_exec_RiskSocial-UsuarioCrear",
     "function-subnets"      : "",
     "function-security-groups" : "",
     "tracing-mode"             : "PassThrough",
     "environment-variables"    : "",
-    "image-tag"                : "",
-    "function-description"     : ""
+    "image-tag"                : ""
 }

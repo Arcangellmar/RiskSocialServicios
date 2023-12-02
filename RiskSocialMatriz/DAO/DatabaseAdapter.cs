@@ -17,97 +17,84 @@ namespace RiskSocialMatriz.DAO
 
         public Response? Matriz(Request request)
         {
-            Random random = new Random();
-            Response response = new Response
-            {
-                MuyPosibleMuyBajo = random.Next(1, 6),
-                MuyPosibleBajo = random.Next(1, 6),
-                MuyPosibleMedio = random.Next(1, 6),
-                MuyPosibleAlto = random.Next(1, 6),
-                MuyPosibleCritico = random.Next(1, 6),
+            Response response = new Response();
 
-                PosibleMuyBajo = random.Next(1, 6),
-                PosibleBajo = random.Next(1, 6),
-                PosibleMedio = random.Next(1, 6),
-                PosibleAlto = random.Next(1, 6),
-                PosibleCritico = random.Next(1, 6),
-
-                OcasionalMuyBajo = random.Next(1, 6),
-                OcasionalBajo = random.Next(1, 6),
-                OcasionalMedio = random.Next(1, 6),
-                OcasionalAlto = random.Next(1, 6),
-                OcasionalCritico = random.Next(1, 6),
-
-                ProbableMuyBajo = random.Next(1, 6),
-                ProbableBajo = random.Next(1, 6),
-                ProbableMedio = random.Next(1, 6),
-                ProbableAlto = random.Next(1, 6),
-                ProbableCritico = random.Next(1, 6),
-
-                ImprobableMuyBajo = random.Next(1, 6),
-                ImprobableBajo = random.Next(1, 6),
-                ImprobableMedio = random.Next(1, 6),
-                ImprobableAlto = random.Next(1, 6),
-                ImprobableCritico = random.Next(1, 6),
-
-            };
-
-            response.Riesgos = new List<Riesgo>();
-
-            for (int i = 0; i < 6; i++)
-            {
-                Riesgo riesgo = new Riesgo
-                {
-                    IdRiesgo = 0,
-                    NombreRiesgo = "Text",
-                    Probabilidad = 1,
-                    Impacto = 1,
-                    Prioridad = "Alta",
-                    Criticidad = "Alta",
-                    Estado = "En proceso",
-                    Usuario = "Rolando"
-                };
-
-                response.Riesgos.Add(riesgo);
-            }
-
-            return response;
             try
             {
-                //using (MySqlConnection cn = new(connectionString))
-                //{
-                //    MySqlCommand cmd = new();
-                //    cn.Open();
-                //    cmd.Connection = cn;
-                //    cmd.CommandType = CommandType.StoredProcedure;
-                //    cmd.CommandText = @"sp_problema_crear";
+                using (MySqlConnection cn = new(connectionString))
+                {
+                    MySqlCommand cmd = new();
+                    cn.Open();
+                    cmd.Connection = cn;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = @"sp_matriz";
 
-                //    cmd.Parameters.Add("@PARAM_IN_ID_PROYECTO", MySqlDbType.Int32).Value = request.IdProyecto;
+                    cmd.Parameters.Add("@PARAM_IN_ID_PROYECTO", MySqlDbType.Int32).Value = request.IdProyecto;
 
-                //    using (var cursor = cmd.ExecuteReader())
-                //    {
-                //        while (cursor.Read())
-                //        {
-                //            response = new()
-                //            {
-                //                //MuyPosibleMuyBajo = (cursor["IN_ID_RIESGO"] == DBNull.Value) ? null : Convert.ToInt32(cursor["IN_ID_RIESGO"]),
-                //                //MuyPosibleBajo = (cursor["VC_NOMBRE_RIESGO"] == DBNull.Value) ? null : Convert.ToInt32(cursor["VC_NOMBRE_RIESGO"]),
-                //                //MuyPosibleMedio = (cursor["DO_PROBABILIDAD"] == DBNull.Value) ? null : Convert.ToInt32(cursor["DO_PROBABILIDAD"]),
-                //                //MuyPosibleAlto = (cursor["DO_IMPACTO"] == DBNull.Value) ? null : Convert.ToInt32(cursor["DO_IMPACTO"]),
-                //                //MuyPosibleCritico = (cursor["VC_PRIODIDAD"] == DBNull.Value) ? null : Convert.ToInt32(cursor["VC_PRIODIDAD"]),
+                    using (var cursor = cmd.ExecuteReader())
+                    {
+                        while (cursor.Read())
+                        {
+                            response = new()
+                            {
+                                MuyPosibleMuyBajo = (cursor["MUY_POSIBLE_MUY_BAJO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["MUY_POSIBLE_MUY_BAJO"]),
+                                MuyPosibleBajo = (cursor["MUY_POSIBLE_BAJO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["MUY_POSIBLE_BAJO"]),
+                                MuyPosibleMedio = (cursor["MUY_POSIBLE_MEDIO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["MUY_POSIBLE_MEDIO"]),
+                                MuyPosibleAlto = (cursor["MUY_POSIBLE_ALTO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["MUY_POSIBLE_ALTO"]),
+                                MuyPosibleCritico = (cursor["MUY_POSIBLE_CRITICO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["MUY_POSIBLE_CRITICO"]),
 
-                //                //PosibleMuyBajo = (cursor["IN_ID_RIESGO"] == DBNull.Value) ? null : Convert.ToInt32(cursor["IN_ID_RIESGO"]),
-                //                //PosibleBajo = (cursor["VC_NOMBRE_RIESGO"] == DBNull.Value) ? null : Convert.ToInt32(cursor["VC_NOMBRE_RIESGO"]),
-                //                //PosibleMedio = (cursor["DO_PROBABILIDAD"] == DBNull.Value) ? null : Convert.ToInt32(cursor["DO_PROBABILIDAD"]),
-                //                //MuyPosibleAlto = (cursor["DO_IMPACTO"] == DBNull.Value) ? null : Convert.ToInt32(cursor["DO_IMPACTO"]),
-                //                //MuyPosibleCritico = (cursor["VC_PRIODIDAD"] == DBNull.Value) ? null : Convert.ToInt32(cursor["VC_PRIODIDAD"]),
-                //            };
-                //        }
-                //    }
-                //    cn.Close();
+                                PosibleMuyBajo = (cursor["POSIBLE_MUY_BAJO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["POSIBLE_MUY_BAJO"]),
+                                PosibleBajo = (cursor["POSIBLE_BAJO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["POSIBLE_BAJO"]),
+                                PosibleMedio = (cursor["POSIBLE_MEDIO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["POSIBLE_MEDIO"]),
+                                PosibleAlto = (cursor["POSIBLE_ALTO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["POSIBLE_ALTO"]),
+                                PosibleCritico = (cursor["POSIBLE_CRITICO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["POSIBLE_CRITICO"]),
 
-                //    return response;
-                //}
+                                OcasionalMuyBajo = (cursor["OCASIONAL_MUY_BAJO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["OCASIONAL_MUY_BAJO"]),
+                                OcasionalBajo = (cursor["OCASIONAL_BAJO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["OCASIONAL_BAJO"]),
+                                OcasionalMedio = (cursor["OCASIONAL_MEDIO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["OCASIONAL_MEDIO"]),
+                                OcasionalAlto = (cursor["OCASIONAL_ALTO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["OCASIONAL_ALTO"]),
+                                OcasionalCritico = (cursor["OCASIONAL_CRITICO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["OCASIONAL_CRITICO"]),
+
+                                ProbableMuyBajo = (cursor["PROBABLE_MUY_BAJO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["PROBABLE_MUY_BAJO"]),
+                                ProbableBajo = (cursor["PROBABLE_BAJO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["PROBABLE_BAJO"]),
+                                ProbableMedio = (cursor["PROBABLE_MEDIO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["PROBABLE_MEDIO"]),
+                                ProbableAlto = (cursor["PROBABLE_ALTO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["PROBABLE_ALTO"]),
+                                ProbableCritico = (cursor["PROBABLE_CRITICO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["PROBABLE_CRITICO"]),
+
+                                ImprobableMuyBajo = (cursor["IMPROBABLE_MUY_BAJO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["IMPROBABLE_MUY_BAJO"]),
+                                ImprobableBajo = (cursor["IMPROBABLE_BAJO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["IMPROBABLE_BAJO"]),
+                                ImprobableMedio = (cursor["IMPROBABLE_MEDIO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["IMPROBABLE_MEDIO"]),
+                                ImprobableAlto = (cursor["IMPROBABLE_ALTO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["IMPROBABLE_ALTO"]),
+                                ImprobableCritico = (cursor["IMPROBABLE_CRITICO"] == DBNull.Value) ? 0 : Convert.ToInt32(cursor["IMPROBABLE_CRITICO"]),
+                            };
+                        }
+
+                        if (cursor.NextResult())
+                        {
+                            response.Riesgos = new List<Riesgo>();
+
+                            while (cursor.Read())
+                            {
+                                Riesgo riesgo = new Riesgo
+                                {
+                                    IdRiesgo = (cursor["IN_ID_RIESGO"] == DBNull.Value) ? null : Convert.ToInt32(cursor["IN_ID_RIESGO"]),
+                                    NombreRiesgo = (cursor["VC_NOMBRE_RIESGO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_NOMBRE_RIESGO"]),
+                                    Probabilidad = (cursor["DO_PROBABILIDAD"] == DBNull.Value) ? null : Convert.ToDouble(cursor["DO_PROBABILIDAD"]),
+                                    Impacto = (cursor["DO_IMPACTO"] == DBNull.Value) ? null : Convert.ToDouble(cursor["DO_IMPACTO"]),
+                                    Prioridad = (cursor["VC_PRIODIDAD"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_PRIODIDAD"]),
+                                    Criticidad = (cursor["VC_CRITICIDAD"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_CRITICIDAD"]),
+                                    Estado = (cursor["VC_ESTADO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_ESTADO"]),
+                                    Usuario = (cursor["VC_USUARIO"] == DBNull.Value) ? null : Convert.ToString(cursor["VC_USUARIO"]),
+                                };
+                                response.Riesgos.Add(riesgo);
+                            }
+                        }
+
+                    }
+                    cn.Close();
+
+                    return response;
+                }
             }
             catch (Exception)
             {
