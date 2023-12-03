@@ -29,6 +29,7 @@ namespace RiskSocialAccionCrear.DAO
                     cmd.Parameters.Add("@PARAM_VC_NOMBRE_ACCION", MySqlDbType.VarChar).Value = request.NombreAccion;
                     cmd.Parameters.Add("@PARAM_VC_DESCRIPCION", MySqlDbType.VarChar).Value = request.DescripcionAccion;
                     cmd.Parameters.Add("@PARAM_IN_ID_USUARIO_CREADOR", MySqlDbType.Int32).Value = request.IdUsuarioCreador;
+                    cmd.Parameters.Add("@PARAM_IN_ID_USUARIO_ASIGNADO", MySqlDbType.Int32).Value = request.IdUsuarioAsignado;
                     cmd.Parameters.Add("@PARAM_IN_ID_PROYECTO", MySqlDbType.Int32).Value = request.IdProyecto;
                     cmd.Parameters.Add("@PARAM_VC_ESTADO", MySqlDbType.VarChar).Value = request.Estado;
 
